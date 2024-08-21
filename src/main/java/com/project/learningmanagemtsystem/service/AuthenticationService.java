@@ -5,6 +5,7 @@ import com.project.learningmanagemtsystem.repository.CoursesJpaRepository;
 import com.project.learningmanagemtsystem.repository.CoursesRepository;
 import com.project.learningmanagemtsystem.repository.TokenRepository;
 import com.project.learningmanagemtsystem.repository.UserRepository;
+import com.project.learningmanagemtsystem.validations.ValidationImplementaion;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ public class AuthenticationService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
     private final TokenRepository tokenRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -44,39 +44,6 @@ public class AuthenticationService {
         this.tokenRepository = tokenRepository;
         this.authenticationManager = authenticationManager;
     }
-
-    //Changed
-
-
-//    public AuthenticationResponse register(User request) {
-//
-//        // check if user already exist. if exist than authenticate the user
-//        if(repository.findByUsername(request.getUsername()).isPresent()) {
-//            return new AuthenticationResponse(null, null,"User already exist", null);
-//        }
-//
-//        User user = new User();
-//        user.setFirstName(request.getFirstName());
-//        user.setLastName(request.getLastName());
-//        user.setUsername(request.getUsername());
-//        user.setPassword(passwordEncoder.encode(request.getPassword()));
-//        user.setEmail(request.getEmail());
-//        user.setPhoneNumber(request.getPhoneNumber());
-//        user.setImageUrl(request.getImageUrl());
-//        user.setRole(request.getRole());
-//        user.setStudentsCompleted(request.getStudentsCompleted());
-//        user.setCourses(request.getCourses());
-//        user = repository.save(user);
-//
-//        String accessToken = jwtService.generateAccessToken(user);
-//        String refreshToken = jwtService.generateRefreshToken(user);
-//
-//        saveUserToken(accessToken, refreshToken, user);
-//
-//        return new AuthenticationResponse(accessToken, refreshToken,"User registration was successful", user);
-//
-//    }
-
 
     public AuthenticationResponse register(User request) {
         if (request.getUsername() == null || request.getEmail() == null || request.getPhoneNumber() == null) {
@@ -99,8 +66,19 @@ public class AuthenticationService {
         user.setLastName(request.getLastName());
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setEmail(request.getEmail());
-        user.setPhoneNumber(request.getPhoneNumber());
+        if(ValidationImplementaion.emailValidation(request.getEmail())){
+            user.setEmail(request.getEmail());
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please Provide a Valid Email");
+        }
+//        user.setEmail(request.getEmail());
+        if(ValidationImplementaion.mobileNumberValidation(request.getPhoneNumber())){
+            user.setPhoneNumber(request.getPhoneNumber());
+            System.out.println(request.getPhoneNumber());
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please Provide a Valid Phone Number");
+        }
+//        user.setPhoneNumber(request.getPhoneNumber());
         user.setImageUrl(request.getImageUrl());
         user.setRole(request.getRole());
         user.setStudentsCompleted(request.getStudentsCompleted());
