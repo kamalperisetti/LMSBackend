@@ -1,10 +1,7 @@
 package com.project.learningmanagemtsystem.service;
 
 import com.project.learningmanagemtsystem.model.*;
-import com.project.learningmanagemtsystem.repository.CoursesJpaRepository;
-import com.project.learningmanagemtsystem.repository.CoursesRepository;
-import com.project.learningmanagemtsystem.repository.TokenRepository;
-import com.project.learningmanagemtsystem.repository.UserRepository;
+import com.project.learningmanagemtsystem.repository.*;
 import com.project.learningmanagemtsystem.validations.ValidationImplementaion;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +27,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
+    private StudentCompletedJpaRepository studentCompletedJpaRepository;
 
     private final AuthenticationManager authenticationManager;
 
@@ -175,6 +173,12 @@ public class AuthenticationService {
 
     public ResponseEntity<String> deleteUserById(int userId) {
         if (repository.existsById(userId)) {
+            List<StudentCompleted> studentCompleted = studentCompletedJpaRepository.findByStudentId(userId);
+            List<Integer> StudentCompletedIds = new ArrayList<>();
+            for(StudentCompleted studentCompleted1 : studentCompleted){
+                StudentCompletedIds.add(studentCompleted1.getStudentCompletedId());
+            }
+            studentCompletedJpaRepository.deleteAllById(StudentCompletedIds);
             repository.deleteById(userId);
             return ResponseEntity.ok("User deleted successfully.");
         } else {
