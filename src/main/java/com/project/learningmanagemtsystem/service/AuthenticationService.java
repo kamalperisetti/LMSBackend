@@ -179,13 +179,10 @@ public class AuthenticationService {
 
     public ResponseEntity<String> deleteUserById(int userId) {
         if (repository.existsById(userId)) {
-            System.out.println(userId + "Userrrrr ID");
             List<StudentCompleted> studentCompleted = studentCompletedJpaRepository.findByStudentId(userId);
-            System.out.println(studentCompleted.isEmpty() + "Checking IS PRESENT");
             List<Integer> StudentCompletedIds = new ArrayList<>();
             for(StudentCompleted studentCompleted1 : studentCompleted){
                 StudentCompletedIds.add(studentCompleted1.getStudentCompletedId());
-                System.out.println(studentCompleted1.getCompleted() + " COMPLETEDDDDDDDD");
             }
             studentCompletedJpaRepository.deleteAllById(StudentCompletedIds);
             repository.deleteById(userId);
