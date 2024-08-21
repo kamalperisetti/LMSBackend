@@ -66,19 +66,19 @@ public class AuthenticationService {
         user.setLastName(request.getLastName());
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        if(ValidationImplementaion.emailValidation(request.getEmail())){
-            user.setEmail(request.getEmail());
-        }else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please Provide a Valid Email");
-        }
-//        user.setEmail(request.getEmail());
-        if(ValidationImplementaion.mobileNumberValidation(request.getPhoneNumber())){
-            user.setPhoneNumber(request.getPhoneNumber());
-            System.out.println(request.getPhoneNumber());
-        }else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please Provide a Valid Phone Number");
-        }
-//        user.setPhoneNumber(request.getPhoneNumber());
+//        if(ValidationImplementaion.emailValidation(request.getEmail())){
+//            user.setEmail(request.getEmail());
+//        }else {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please Provide a Valid Email");
+//        }
+        user.setEmail(request.getEmail());
+//        if(ValidationImplementaion.mobileNumberValidation(request.getPhoneNumber())){
+//            user.setPhoneNumber(request.getPhoneNumber());
+//            System.out.println(request.getPhoneNumber());
+//        }else {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please Provide a Valid Phone Number");
+//        }
+        user.setPhoneNumber(request.getPhoneNumber());
         user.setImageUrl(request.getImageUrl());
         user.setRole(request.getRole());
         user.setStudentsCompleted(request.getStudentsCompleted());
