@@ -27,6 +27,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
+
+    @Autowired
     private StudentCompletedJpaRepository studentCompletedJpaRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -110,6 +112,8 @@ public class AuthenticationService {
         return new AuthenticationResponse(accessToken, refreshToken,   "User login was successful", user);
 
     }
+
+
     private void revokeAllTokenByUser(User user) {
 //        CHanged Here getId to getStudentId
         List<Token> validTokens = tokenRepository.findAllAccessTokensByUser(user.getStudentId());
@@ -123,6 +127,8 @@ public class AuthenticationService {
 
         tokenRepository.saveAll(validTokens);
     }
+
+
     private void saveUserToken(String accessToken, String refreshToken, User user) {
         Token token = new Token();
         token.setAccessToken(accessToken);
@@ -173,10 +179,13 @@ public class AuthenticationService {
 
     public ResponseEntity<String> deleteUserById(int userId) {
         if (repository.existsById(userId)) {
+            System.out.println(userId + "Userrrrr ID");
             List<StudentCompleted> studentCompleted = studentCompletedJpaRepository.findByStudentId(userId);
+            System.out.println(studentCompleted.isEmpty() + "Checking IS PRESENT");
             List<Integer> StudentCompletedIds = new ArrayList<>();
             for(StudentCompleted studentCompleted1 : studentCompleted){
                 StudentCompletedIds.add(studentCompleted1.getStudentCompletedId());
+                System.out.println(studentCompleted1.getCompleted() + " COMPLETEDDDDDDDD");
             }
             studentCompletedJpaRepository.deleteAllById(StudentCompletedIds);
             repository.deleteById(userId);
