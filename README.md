@@ -1,10 +1,12 @@
-Admin Credentials
+**Path:** https://lmsbackend-fhsd.onrender.com/login
+
+**Admin Credentials:**
 username = kamal  
 password = 1234
 
+**Path:** https://lmsbackend-fhsd.onrender.com/register
 
-Admin Register Fromat:
-
+**Admin Register Fromat:**
 {
     "firstName": "Vivek",
     "lastName":"Kella",
@@ -16,8 +18,7 @@ Admin Register Fromat:
    
 }
 
-User Register Fromat:
-
+**User Register Fromat:**
 {
     "firstName": "Rajesh",
     "lastName":"ram",
