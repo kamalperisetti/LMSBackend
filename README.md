@@ -1,24 +1,32 @@
 **Path:** https://lmsbackend-fhsd.onrender.com/login
 
 **Admin Credentials:**
-username = kamal  
-password = 1234
-
-**Path:** https://lmsbackend-fhsd.onrender.com/register
-
-**Admin Register Fromat:**
+```json
 {
-    "firstName": "Vivek",
-    "lastName":"Kella",
-    "username":"vivek",
-    "phoneNumber":"8717974008",
-    "email":"vivek889@gamil.com",
-    "password": "2580",
-    "role":"ADMIN"
-   
+"username": "kamal"  
+"password": "1234"
 }
 
-**User Register Fromat:**
+```
+**Path:** https://lmsbackend-fhsd.onrender.com/register
+## Admin Registration Format
+
+```json
+{
+    "firstName": "Vivek",
+    "lastName": "Kella",
+    "username": "vivek",
+    "phoneNumber": "8717974008",
+    "email": "vivek889@gamil.com",
+    "password": "2580",
+    "role": "ADMIN"
+}
+
+
+```
+
+## User Register Fromat
+```json
 {
     "firstName": "Rajesh",
     "lastName":"ram",
